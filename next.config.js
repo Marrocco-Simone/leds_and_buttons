@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: false,
-  assetPrefix: 'leds_and_buttons/'
+  assetPrefix: './leds_and_buttons/'
 }
 
 module.exports = nextConfig

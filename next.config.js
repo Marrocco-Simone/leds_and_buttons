@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  trailingSlash: true,
-  assetPrefix: './'
+  trailingSlash: false,
+  assetPrefix: 'leds_and_buttons/'
 }
 
 module.exports = nextConfig

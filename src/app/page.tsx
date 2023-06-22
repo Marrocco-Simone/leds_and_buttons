@@ -11,6 +11,7 @@ import {
   pressButton,
   searchPathsFromAllZeroToAllOne,
 } from "../functions/graph_generator";
+import styles from "./page.module.css";
 
 const initial_buttons: Buttons = {
   A: [0, 2],
@@ -25,9 +26,6 @@ export default function Home() {
   const [game_status, setGameStatus] = useState<BinaryString>("0".repeat(3));
   const [solutions, setSolutions] = useState<Node[]>();
   useEffect(() => {
-    setSolutions(getSolutions());
-  }, []);
-  useEffect(() => {
     setGameStatus("0".repeat(n_leds));
   }, [n_leds]);
 
@@ -38,8 +36,14 @@ export default function Home() {
       .map((a) => Number(a));
 
     for (const n of new_button) {
-      if (isNaN(n) || n < 0 || n > n_leds) {
+      if (isNaN(n)) {
         alert("Wrong string, write like `0, 1, 2`");
+        return;
+      }
+      if (n < 0 || n > n_leds) {
+        alert(
+          "Number of buttons must be between 0 and the number of leds minus 1"
+        );
         return;
       }
     }
@@ -74,26 +78,30 @@ export default function Home() {
 
     for (const button of Object.keys(buttons)) {
       elem.push(
-        <li key={button}>
-          <button onClick={() => removeButton(button)}>remove</button>
-          <button
-            onClick={() => {
-              setGameStatus((prev_game_status) =>
-                pressButton(prev_game_status, buttons[button])
-              );
-            }}
-          >
-            press
-          </button>
-          {button}:{buttons[button].join(", ")}
-        </li>
+        <tr key={button}>
+          <td>
+            {button} : {buttons[button].join(", ")}
+          </td>
+          <td>
+            <button onClick={() => removeButton(button)}>remove</button>
+          </td>
+          <td>
+            <button
+              onClick={() => {
+                setGameStatus((prev_game_status) =>
+                  pressButton(prev_game_status, buttons[button])
+                );
+              }}
+            >
+              press
+            </button>
+          </td>
+        </tr>
       );
     }
 
     return (
       <div>
-        Buttons:
-        <ul>{elem}</ul>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -101,11 +109,14 @@ export default function Home() {
             addNewButton(e.target.new_button.value);
           }}
         >
-          Add Button with indexes separated by commas:
-          <br />
+          Add Button with indexes separated by commas: <br />
           <input id="new_button" />
           <button type="submit">ADD</button>
         </form>
+        Buttons:
+        <table>
+          <tbody>{elem}</tbody>
+        </table>
         <div>
           Game Status: {game_status}{" "}
           <button onClick={() => setGameStatus("0".repeat(n_leds))}>
@@ -145,22 +156,23 @@ export default function Home() {
         <button onClick={() => setSolutions(getSolutions())}>
           Get Solutions
         </button>
-        <br />
         Solutions Found ({solutions?.length ?? "No Solutions Found"}):
         <table>
-          <tr>
-            <th>Button Sequence</th>
-            <th>Status Sequence</th>
-          </tr>
-          {elem}
+          <thead>
+            <tr>
+              <th>Button Sequence</th>
+              <th>Status Sequence</th>
+            </tr>
+          </thead>
+          <tbody>{elem}</tbody>
         </table>
       </div>
     );
   }
 
   return (
-    <main>
-      <label>
+    <main className={styles.main}>
+      <label className={styles.label}>
         N leds
         <input
           type="number"
@@ -170,7 +182,7 @@ export default function Home() {
         />
       </label>
       {getButtonsElem()}
-      <label>
+      <label className={styles.label}>
         Max solution Length
         <input
           type="number"

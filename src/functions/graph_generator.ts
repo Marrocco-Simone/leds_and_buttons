@@ -55,7 +55,7 @@ export function searchPathsFromAllZeroToAllOne(
   n_leds: number,
   buttons: Buttons,
   statuses_graph: StatusesGraph,
-  max_solution_lenght: number
+  max_solution_length: number
 ) {
   const start_node = "0".repeat(n_leds);
   const end_node = "1".repeat(n_leds);
@@ -73,7 +73,7 @@ export function searchPathsFromAllZeroToAllOne(
   while (true) {
     if (!node_queue.length) break;
     const current_node = node_queue.shift()!;
-    if (current_node.buttons_pressed.length > max_solution_lenght) break;
+    if (current_node.buttons_pressed.length > max_solution_length) break;
 
     for (const button of Object.keys(buttons)) {
       const next_status = statuses_graph[current_node.status][button];

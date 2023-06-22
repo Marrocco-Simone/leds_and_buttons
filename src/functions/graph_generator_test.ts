@@ -14,7 +14,7 @@ const buttons: Buttons = {
   E: [3, 5],
   F: [4],
 };
-const max_solution_lenght = 8;
+const max_solution_length = 8;
 
 const statuses = getAllLedsStatuses(n_leds);
 const statuses_graph = createStatusesGraph(statuses, buttons);
@@ -26,6 +26,6 @@ const solutions = searchPathsFromAllZeroToAllOne(
   n_leds,
   buttons,
   statuses_graph,
-  max_solution_lenght
+  max_solution_length
 );
 console.table(solutions);

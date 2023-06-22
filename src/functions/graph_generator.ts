@@ -7,6 +7,12 @@ export type Buttons = { [letter: string]: Button };
 export type StatusGraph = { [button: string]: BinaryString };
 export type StatusesGraph = { [status: BinaryString]: StatusGraph };
 
+export type Node = {
+  status: BinaryString;
+  buttons_pressed: string[];
+  old_statuses: BinaryString[];
+};
+
 export function convertBinaryStringToArray(status: BinaryString): BinaryArray {
   return status.split("").map((s) => (s === "1" ? true : false));
 }
@@ -60,11 +66,6 @@ export function searchPathsFromAllZeroToAllOne(
   const start_node = "0".repeat(n_leds);
   const end_node = "1".repeat(n_leds);
 
-  type Node = {
-    status: BinaryString;
-    buttons_pressed: string[];
-    old_statuses: BinaryString[];
-  };
   const solutions: Node[] = [];
   const node_queue: Node[] = [
     { status: start_node, buttons_pressed: [], old_statuses: [start_node] },

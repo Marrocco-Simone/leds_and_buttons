@@ -7,7 +7,6 @@
     "build": "next build; rm -rf docs; cp -a ./out ./docs; touch ./docs/.nojekyll",
     "start": "next start",
     "lint": "next lint",
-    "graph": "tsc src/functions/graph_generator_test.ts; node src/functions/graph_generator_test.js",
     "static": "serve out"
   },
   "dependencies": {

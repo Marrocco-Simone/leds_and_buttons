@@ -72,6 +72,7 @@ export function searchPathsFromAllZeroToAllOne(
   ];
 
   while (true) {
+    if (solutions.length > 10000) break;
     if (!node_queue.length) break;
     const current_node = node_queue.shift()!;
     if (current_node.buttons_pressed.length > max_solution_length) break;

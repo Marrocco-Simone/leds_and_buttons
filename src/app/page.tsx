@@ -40,7 +40,7 @@ export default function Home() {
         alert("Wrong string, write like `0, 1, 2`");
         return;
       }
-      if (n < 0 || n > n_leds) {
+      if (n < 0 || n >= n_leds) {
         alert(
           "Number of buttons must be between 0 and the number of leds minus 1"
         );
@@ -128,9 +128,10 @@ export default function Home() {
     );
   }
 
-  function getSolutions() {
+  async function getSolutions() {
     const statuses = getAllLedsStatuses(n_leds);
     const statuses_graph = createStatusesGraph(statuses, buttons);
+    console.log(statuses_graph)
 
     const new_solutions = searchPathsFromAllZeroToAllOne(
       n_leds,
@@ -153,7 +154,11 @@ export default function Home() {
 
     return (
       <div>
-        <button onClick={() => setSolutions(getSolutions())}>
+        <button
+          onClick={() =>
+            getSolutions().then((new_solutions) => setSolutions(new_solutions))
+          }
+        >
           Get Solutions
         </button>
         Solutions Found ({solutions?.length ?? "No Solutions Found"}):
